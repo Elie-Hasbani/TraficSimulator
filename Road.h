@@ -22,6 +22,11 @@
 #include "Signalisation.h"
 #endif
 
+#ifndef INTERSECTION_H
+#define INTERSECTION_H
+#include "Intersection.h"
+#endif
+
 #ifndef LIS
 #define LIS
 #include <list>
@@ -36,6 +41,8 @@
 #define IO
 #include <iostream>
 #endif
+
+
 
 using namespace std;
 
@@ -58,16 +65,25 @@ public:
     
     void addVehicule(Vehicule* vehicule);
     void addSignalisation(Signalisation * signalisation);
+    inline void addIntersectionEnd(Intersection* intersection){intersectionFin = intersection;}
     
 
 
     inline vector <Signalisation*> getSignalisation(){return signalisation_road;}
     inline list <Vehicule*> getVehicules(){return vehicules_road;}
     inline int getOriantation(){return oriantation;}
+     inline int getDirection(){return direction;}
+
+    inline int getxStart(){return xStart;}
+    inline int getyStart(){return yStart;}
+    inline int getxEnd(){return xEnd;}
+    inline int getyEnd(){return yEnd;}
 
 
 
-    Road (int nu, int ori);
+
+
+    Road (int nu, int ori, int direc, int xstart, int ystart, int xend, int yend);
     virtual ~Road ( );
     //Road (const Road & road);
 
@@ -76,9 +92,14 @@ public:
 protected:
     int num; 
     int oriantation; // 0 NorthSouth or 1 EastWest (only straight raods)
+    int direction; //0 if the circulation diraction is in the direction off ascending x or y(depending on the oriantation), 1 for the negative x or y
+
+    float xEnd, yEnd;
+    float xStart, yStart;
 
     list <Vehicule*> vehicules_road; //list of vehicules on this road
     vector <Signalisation*> signalisation_road; //list of signalisations on this road
+    Intersection* intersectionFin;
 
 
 };

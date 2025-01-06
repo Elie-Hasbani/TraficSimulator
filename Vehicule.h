@@ -31,6 +31,7 @@ public:
 //----------------------------------------------------- Méthodes publiques
    
     void Forward(int Obstacle, int oriantation, double dist);
+    inline void changeDirection(int direc){direction = direc;}
 
     inline void decelerte(){decelerated = 1;}
     inline void unDecelerte(){decelerated = 0;}
@@ -41,7 +42,7 @@ public:
 
 //------------------------------------------------- Surcharge d'opérateur
     int operator !=(const Vehicule & unVehicule);
-
+    friend ostream & operator <<(ostream& flux, const Vehicule & vehicule);
 
 
 
@@ -54,13 +55,14 @@ public:
 //------------------------------------------------------------------ PRIVE
 
 protected:
-float xPos, yPos; 
-double max_speed;
+float xPos, yPos;
+int direction; 
 
+double max_speed;
 double speed;
 int decelerated;
-int nbVoiture;
 
+int nbVoiture;
 static int nbtot;
 
 

@@ -17,6 +17,11 @@
 #define VEHICULE_H
 #endif
 
+#ifndef INTERSECTION_H
+#define INTERSECTION_H
+#include "Intersection.h"
+#endif
+
 #ifndef VEC
 #define VEC
 #include <vector>
@@ -57,16 +62,65 @@ int Simulation::checkObstacleRoad(Road * road){
     vector<Signalisation*> signs = road->getSignalisation();
 
 
-
+    
     int oriantation = road->getOriantation();
     if(oriantation == 0){
+        double dist;
+        for(list <Vehicule*>::iterator it = vehicules.begin(); it != vehicules.end(); ++it){
+
+            for (list<Vehicule*>::iterator it2 = vehicules.begin(); it2 != vehicules.end(); ++it2){
+                if((*it) ->operator!=(*(*it2))){
+                    dist = (*it2) -> getyPos() - (*it) ->getyPos();
+                    if ( dist >= 0 && dist <= 100.0){
+                        (*it) -> Forward(1 , oriantation, dist);
+                        (*it) -> decelerte();
+                        
+
+                        break;
+                    } 
+                }
+                
+            }
+
+
+            for(vector <Signalisation*>::iterator it3 = signs.begin(); it3 != signs.end(); ++it3){
+
+                
+                if((*it) -> getDecelerate() == 0){
+                    dist = (*it3) -> getyPos() - (*it) ->getyPos();
+                    if ( dist >=0 && dist  <= 100.0){
+                        (*it) -> Forward(1 , oriantation, dist);
+                        (*it) -> decelerte();
+
+                        break;
+                    } 
+                }
+                   
+                
+
+            }
+
+
+ 
+            if((*it) -> getDecelerate() == 0){
+                (*it) -> Forward(0, oriantation, 0);
+            }
+
+            (*it) ->unDecelerte();
+            
+
+        }
+   
+    }
+
+
+
+    else{
         for(list <Vehicule*>::iterator it = vehicules.begin(); it != vehicules.end(); ++it){
 
 
-
-
             for (vector<Signalisation*>::iterator it2 = signs.begin(); it2 != signs.end(); ++it2){
-                float dist = fabs((*it) ->getyPos() - (*it2) -> getyPos());
+                float dist = fabs((*it) ->getxPos() - (*it2) -> getxPos());
                 if ( dist <= 100.0){
                     (*it) -> Forward(1 , oriantation, dist);
                     (*it) -> decelerte();
@@ -81,7 +135,7 @@ int Simulation::checkObstacleRoad(Road * road){
             for(list <Vehicule*>::iterator it3 = vehicules.begin(); it3 != vehicules.end(); ++it3){
                 if((*it) ->operator!=(*(*it3))){
                     if((*it) -> getDecelerate() == 0){
-                        double dist = fabs((*it) ->getyPos() - (*it3) -> getyPos());
+                        double dist = fabs((*it) ->getxPos() - (*it3) -> getxPos());
                         if (  dist  <= 100.0){
                             (*it) -> Forward(1 , oriantation, dist);
                             (*it) -> decelerte();
@@ -107,46 +161,67 @@ int Simulation::checkObstacleRoad(Road * road){
    
     }
 
-
-
-    /*else{
-        for(list <Vehicule*>::iterator it = vehicules.begin(); it != vehicules.end(); ++it){
-            for (vector<Signalisation*>::iterator it2 = road->getSignalisation().begin(); it2 != road.getSignalisation().end(); ++it2){
-                if (  ( (*it) ->getyPos() - (*it2) -> getyPos())  <= 50){
-                    (*it) -> Forward(1 , oriantation);
-
-                    break;
-                } 
-                
-            }
-
-            (*it) -> Forward(0, oriantation);
-        }
-
-
-        for(list <Vehicule*>::iterator it = vehicules.begin(); it != vehicules.end(); ++it){
-            for(list <Vehicule*>::iterator it3 = vehicules.begin(); it3 != vehicules.end(); ++it3){
-                if((*it) -> getDecelerate() == 0){
-                    if ( ( (*it) ->getxPos() - (*it3) -> getxPos())  <= 50){
-                        (*it) -> Forward(1 , oriantation);
-                        (*it) ->unDecelerte();
-
-                        break;
-                    } 
-                    
-                    (*it) ->unDecelerte();
-                }
-
-            }
-
-            (*it) -> Forward(0, oriantation);
-        }
-
-    }*/
-
     return 0;
     
 }
+
+
+
+int Simulation::checkVehiculeEndOfRoad(Road*road, Vehicule*vehicule){
+    //list <Vehicule*> vehicules = road -> getVehicules();
+
+    float limit;
+    if(road -> getOriantation() == 0){
+        if(road -> getDirection() == 0){
+            if(road -> getyEnd() - vehicule->getyPos() <= 10){
+                return 1;
+            }
+
+        }
+
+        else{
+            if(vehicule->getyPos() - road -> getyStart() <= 10){
+                return 1;
+            }
+
+        }
+    }
+
+    else{
+
+        if(road -> getDirection() == 0){
+            if(road -> getxEnd() - vehicule->getxPos() <= 10){
+                return 1;
+            }
+        }
+
+        else{
+            if(vehicule->getxPos() - road -> getxStart() <= 10){
+                return 1;
+            }
+
+        }
+
+    }
+
+    /*list<Vehicule*>::reverse_iterator ri;
+    for(ri = vehicules.rbegin(); ri!=vehicules.rend(); ++ri){
+        if(road -> getOriantation() == 0){
+            if(road -> get)
+            if((*ri) -> getxPos() >= limit)
+
+        }
+
+
+    }*/
+
+
+   return 0;
+
+}
+
+
+
 
 void Simulation::update(){
     

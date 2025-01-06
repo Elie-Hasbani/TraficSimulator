@@ -14,6 +14,11 @@
 #include "Vehicule.h"
 #endif
 
+#ifndef INTERSECTION_H
+#define INTERSECTION_H
+#include "Intersection.h"
+#endif
+
 #ifndef IO
 #define IO
 #include <iostream>
@@ -25,15 +30,22 @@
 
 
 int main(){
-    Road* road1 = new Road(1, 0);
+    Road* road1 = new Road(1, 0, 0,      0, 0, 200, 200);
     //Road road2(2, 0);
+    
+    Intersection * intersection1 = new Intersection;
+    intersection1 -> roadNumbers.push_back(1);
+    intersection1 -> roadNumbers.push_back(2);
 
-    Vehicule* veh1 = new Vehicule(5, 0, 30);
-    Vehicule* veh2 = new Vehicule(10, 0, 20);
+    Vehicule* veh1 = new Vehicule(0, 0, 30);
+    Vehicule* veh2 = new Vehicule(0, 70, 50);
+    //Vehicule* veh3 = new Vehicule(0, 6, 20);
+    //Vehicule* veh4 = new Vehicule(0, 12, 20);
 
-
-    Signalisation * sign1 = new Signalisation(100, 30);
+    Signalisation * sign1 = new Signalisation(150, 800);
     Signalisation * sign2 = new Signalisation(5, 5);
+
+    
 
 
     road1 -> addSignalisation(sign1);
@@ -46,13 +58,17 @@ int main(){
 
 
     road1 -> addVehicule(veh1);
-    //road1 -> addVehicule(veh2);
+    road1 -> addVehicule(veh2);
+    //road1 -> addVehicule(veh3);
+    //road1 -> addVehicule(veh4);
 
-    /*list <Vehicule*> veh = road1->getVehicules();
+
+
+    list <Vehicule*> veh = road1->getVehicules();
     for(list <Vehicule*>::iterator it = (veh).begin(); it != (veh).end(); ++it){
-        cout<< (*it) ->getxPos() <<endl;
+        cout<< *(*it) <<endl;
 
-    }*/
+    }
    
 
 
@@ -73,9 +89,6 @@ int main(){
             lastTime = currentTime;
 
             simu.checkObstacleRoad(road1);
-
-            
-            
 
             // Pause pour ralentir la boucle (si besoin)
             std::this_thread::sleep_for(std::chrono::milliseconds(10));

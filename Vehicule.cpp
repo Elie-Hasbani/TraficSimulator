@@ -37,38 +37,70 @@ Vehicule::~Vehicule(){
     #endif
 }
 
-void Vehicule::Forward(int obstacle, int oriantaion, double dist){
+void Vehicule::Forward(int obstacle, int oriantation, double dist){
 
     if(speed < max_speed && !obstacle){/*to re accelerate */}
 
 
     if (!obstacle){
-        if (oriantaion == 0){
-            yPos += speed;
+
+  
+        speed = speed*(1+ 0.5*(1-speed/max_speed));
+
+
+        if (!direction){
+            if (oriantation == 0){
+                yPos += speed;
+            }
+            else{
+                xPos += speed;
+            }
         }
+
         else{
-            xPos += speed;
+              if (oriantation == 0){
+                yPos -= speed;
+            }
+            else{
+                xPos -= speed;
+            }
         }
         
     }
+
+ 
+
     else{
 
-        speed = max_speed* sqrt(((dist-5.0)/95.0));
-        if (dist < 5){
+        speed = max_speed* sqrt(((dist-10.0)/90.0));
+        if (dist < 10){
             speed = 0;
         }
 
-        if(oriantaion == 0){
-            yPos += speed;
+        
+
+
+        if (!direction){
+            if (oriantation == 0){
+                yPos += speed;
+            }
+            else{
+                xPos += speed;
+            }
         }
 
         else{
-            xPos += speed;
+              if (oriantation == 0){
+                yPos -= speed;
+            }
+            else{
+                xPos -= speed;
+            }
         }
         
     }
 
-    cout<< "voiture numero " << nbVoiture << " en position "<< xPos << ", "<<yPos<< " de vitesse " << speed<<endl;
+    cout<< (*this) <<endl;
 
 }
 
@@ -80,4 +112,10 @@ int Vehicule::operator != (const Vehicule & unVehicule){
     return 1;
 
 
+}
+
+ostream & operator <<(ostream& flux, const Vehicule & vehicule){
+    cout<< "voiture numero " << vehicule.nbVoiture << " en position" << " (" <<vehicule.xPos<<","<< vehicule.yPos<<") "<< "de vitesse " << vehicule.speed <<" ("<<vehicule.nbVoiture<<")";
+
+    return flux;
 }
