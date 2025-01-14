@@ -30,7 +30,7 @@
 
 
 int main(){
-    Road* road1 = new Road(1, 0, 0,      0, 0, 200, 200);
+    Road* road1 = new Road(1, 0, 0,      0, 0, 500, 700);
     //Road road2(2, 0);
     
     Intersection * intersection1 = new Intersection;
@@ -38,9 +38,9 @@ int main(){
     intersection1 -> roadNumbers.push_back(2);
 
     Vehicule* veh1 = new Vehicule(0, 0, 30);
-    Vehicule* veh2 = new Vehicule(0, 70, 50);
-    //Vehicule* veh3 = new Vehicule(0, 6, 20);
-    //Vehicule* veh4 = new Vehicule(0, 12, 20);
+    Vehicule* veh2 = new Vehicule(0, 70.222, 40);
+    /*Vehicule* veh3 = new Vehicule(0, 120, 30);
+    Vehicule* veh4 = new Vehicule(0, 250, 20);*/
 
     Signalisation * sign1 = new Signalisation(150, 800);
     Signalisation * sign2 = new Signalisation(5, 5);

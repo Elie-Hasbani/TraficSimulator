@@ -26,4 +26,4 @@ Simulation.o: Simulation.cpp Simulation.h
 
 
 clean:
-	rm -f $(OBJS) $(TARGET)
+	del *.o 

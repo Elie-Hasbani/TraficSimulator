@@ -33,12 +33,13 @@ public:
     void Forward(int Obstacle, int oriantation, double dist);
     inline void changeDirection(int direc){direction = direc;}
 
-    inline void decelerte(){decelerated = 1;}
-    inline void unDecelerte(){decelerated = 0;}
     
-    inline int getDecelerate(){return decelerated;}
     inline int getxPos(){return xPos;}
     inline int getyPos(){return yPos;}
+    inline int getSpeed(){return speed;}
+
+    inline void changeMinDist(float dist){minDistToObstacle = dist;}
+    inline float getMinDist(){return minDistToObstacle;}
 
 //------------------------------------------------- Surcharge d'opérateur
     int operator !=(const Vehicule & unVehicule);
@@ -60,7 +61,7 @@ int direction;
 
 double max_speed;
 double speed;
-int decelerated;
+float minDistToObstacle;
 
 int nbVoiture;
 static int nbtot;

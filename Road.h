@@ -65,14 +65,15 @@ public:
     
     void addVehicule(Vehicule* vehicule);
     void addSignalisation(Signalisation * signalisation);
-    inline void addIntersectionEnd(Intersection* intersection){intersectionFin = intersection;}
+    inline void addIntersectionEnd(Intersection* intersection){intersectionEnd = intersection;}
     
 
 
     inline vector <Signalisation*> getSignalisation(){return signalisation_road;}
     inline list <Vehicule*> getVehicules(){return vehicules_road;}
+    inline Intersection* getIntersectionEnd(){return intersectionEnd;}
     inline int getOriantation(){return oriantation;}
-     inline int getDirection(){return direction;}
+    inline int getDirection(){return direction;}
 
     inline int getxStart(){return xStart;}
     inline int getyStart(){return yStart;}
@@ -99,7 +100,7 @@ protected:
 
     list <Vehicule*> vehicules_road; //list of vehicules on this road
     vector <Signalisation*> signalisation_road; //list of signalisations on this road
-    Intersection* intersectionFin;
+    Intersection* intersectionEnd;
 
 
 };

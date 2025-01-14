@@ -25,7 +25,7 @@ void Road::addVehicule(Vehicule* vehicule){
         }
 
         list <Vehicule*>::iterator it = vehicules_road.begin();
-        while (it != vehicules_road.end() && (*it) -> getyPos()  <= vehicule -> getyPos()){
+        while (it != vehicules_road.end() && (*it) -> getyPos()  >= vehicule -> getyPos()){
             ++it;
         }
 
@@ -33,8 +33,26 @@ void Road::addVehicule(Vehicule* vehicule){
 
 
     }
-    
 
+    else{
+        if(vehicules_road.begin() == vehicules_road.end()){
+            vehicules_road.push_back(vehicule);
+            return;
+        }
+
+        list <Vehicule*>::iterator it = vehicules_road.begin();
+        while (it != vehicules_road.end() && (*it) -> getxPos()  >= vehicule -> getxPos()){
+            ++it;
+        }
+
+        vehicules_road.insert(it, vehicule);
+
+
+
+    }
+    
+    
+    /////orders the vehicules when inserted depending on the oriantation and direction.(ex if 0,0  I order them from biger yPos to smaller yPos)
 }
 
 
@@ -49,7 +67,7 @@ Road::Road( int nu, int ori, int direc, int xstart, int ystart, int xend, int ye
     xStart = xstart;
     yStart = ystart;
     xEnd = xend;
-    yend = yEnd;
+    yEnd = yend;
    
 
     #ifdef MAP
