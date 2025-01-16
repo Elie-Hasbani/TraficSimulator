@@ -27,3 +27,4 @@ Simulation.o: Simulation.cpp Simulation.h
 
 clean:
 	del *.o 
+	del *.exe

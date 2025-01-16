@@ -45,7 +45,7 @@ class Simulation
     void update();
     int checkObstacleRoad(Road * road);
     int checkVehiculeEndOfRoad(Road*road, Vehicule*vehicule);
-    void vehiculeChangeRoad(Vehicule *vehicule, Road*road);
+    int vehiculeChangeRoad(Vehicule *vehicule, Road*road);
 
 
 

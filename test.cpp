@@ -1,38 +1,28 @@
 #include <iostream>
 #include <list>
-#include <algorithm> // pour std::lower_bound
 
-using namespace std;
-
-void insertInSortedList(std::list<int>& lst, int value) {
-    /*auto it = std::find_if(lst.begin(), lst.end(), [value](int elem) { return elem >= value; });
-    lst.insert(it, value); // Insère l'élément*/
-
-    cout << (lst.begin() == lst.end()) <<endl;
-    list <int>::iterator it = lst.begin();
-    while ((*it) <= value && it != lst.end()){
-        ++it;
-    
-        
-    }
-
-    lst.insert(it, value);
-
-
+void supprimerElement(std::list<int>& lst, std::list<int>::iterator it) {
+    // Supprime l'élément pointé par l'itérateur
+    it = lst.erase(it);
+    // it est maintenant mis à jour pour pointer sur l'élément suivant
 }
 
 int main() {
-    std::list<int> sortedList;
-    int valueToInsert = 0;
-    int valueToInsert2 = 10;
+    std::list<int> lst = {10, 20, 30, 40, 50};
 
-    insertInSortedList(sortedList, valueToInsert);
-    insertInSortedList(sortedList, valueToInsert2);
+    // Obtenir un itérateur pointant sur l'élément à supprimer
+    auto it = lst.begin();
+    std::advance(it, 2); // Avancer de deux positions pour pointer sur 30
 
-    // Affichage de la liste
-    for (int num : sortedList) {
-        std::cout << num << " ";
+    // Appeler la fonction pour supprimer l'élément pointé
+    supprimerElement(lst, it);
+
+    // Afficher la liste après la suppression
+    std::cout << "Liste après suppression : ";
+    for (int val : lst) {
+        std::cout << val << " "; // Affichera : 10 20 40 50
     }
+    std::cout << std::endl;
 
     return 0;
 }

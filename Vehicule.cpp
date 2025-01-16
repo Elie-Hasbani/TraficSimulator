@@ -115,7 +115,7 @@ int Vehicule::operator != (const Vehicule & unVehicule){
 }
 
 ostream & operator <<(ostream& flux, const Vehicule & vehicule){
-    cout<< "voiture numero " << vehicule.nbVoiture << " en position" << " (" <<vehicule.xPos<<","<< vehicule.yPos<<") "<< "de vitesse " << vehicule.speed <<" ("<<vehicule.nbVoiture<<")";
+    cout<< "voiture numero " << vehicule.nbVoiture << " en position" << " (" <<vehicule.xPos<<","<< vehicule.yPos<<") "<< "de vitesse " << vehicule.speed << " en oriantation "<< vehicule.oriantation <<" ("<<vehicule.nbVoiture<<")";
 
     return flux;
 }

@@ -31,6 +31,7 @@ public:
 //----------------------------------------------------- Méthodes publiques
    
     void Forward(int Obstacle, int oriantation, double dist);
+    inline void changeOriantation(int ori){oriantation = ori;}
     inline void changeDirection(int direc){direction = direc;}
 
     
@@ -57,7 +58,8 @@ public:
 
 protected:
 float xPos, yPos;
-int direction; 
+int oriantation;
+int direction;
 
 double max_speed;
 double speed;

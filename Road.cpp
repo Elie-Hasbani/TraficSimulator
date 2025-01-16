@@ -17,7 +17,9 @@ void Road::addSignalisation(Signalisation * signalisation){
 }
 
 void Road::addVehicule(Vehicule* vehicule){
+    vehicule -> changeOriantation(oriantation);
     vehicule -> changeDirection(direction);
+
     if(oriantation == 0){
         if(vehicules_road.begin() == vehicules_road.end()){
             vehicules_road.push_back(vehicule);
@@ -53,6 +55,13 @@ void Road::addVehicule(Vehicule* vehicule){
     
     
     /////orders the vehicules when inserted depending on the oriantation and direction.(ex if 0,0  I order them from biger yPos to smaller yPos)
+}
+
+void Road::removeVehicule(list<Vehicule*>::iterator & it){
+    vehicules_road.erase(it);
+
+
+
 }
 
 

@@ -30,17 +30,16 @@
 
 
 int main(){
-    Road* road1 = new Road(1, 0, 0,      0, 0, 500, 700);
-    //Road road2(2, 0);
+    Road* road1 = new Road(0, 0, 0,      0, 0, 500, 700);
+    Road* road2 = new Road(1, 1, 0,      0, 0, 500, 700);
     
     Intersection * intersection1 = new Intersection;
     intersection1 -> roadNumbers.push_back(1);
-    intersection1 -> roadNumbers.push_back(2);
 
     Vehicule* veh1 = new Vehicule(0, 0, 30);
     Vehicule* veh2 = new Vehicule(0, 70.222, 40);
-    /*Vehicule* veh3 = new Vehicule(0, 120, 30);
-    Vehicule* veh4 = new Vehicule(0, 250, 20);*/
+    Vehicule* veh3 = new Vehicule(0, 120, 30);
+    Vehicule* veh4 = new Vehicule(0, 250, 20);
 
     Signalisation * sign1 = new Signalisation(150, 800);
     Signalisation * sign2 = new Signalisation(5, 5);
@@ -49,7 +48,8 @@ int main(){
 
 
     road1 -> addSignalisation(sign1);
-    //road1 -> addSignalisation(sign2);
+
+    road1 -> addIntersectionEnd(intersection1);
 
     /*vector<Signalisation*> signs = road1->getSignalisation();
     for (vector<Signalisation*>::iterator it2 = (signs).begin(); it2 != (signs).end(); ++it2){
@@ -59,7 +59,8 @@ int main(){
 
     road1 -> addVehicule(veh1);
     road1 -> addVehicule(veh2);
-    //road1 -> addVehicule(veh3);
+
+    road2 -> addVehicule(veh3);
     //road1 -> addVehicule(veh4);
 
 
@@ -74,6 +75,7 @@ int main(){
 
     Simulation simu;
     simu.addRoad(road1);
+    simu.addRoad(road2);
     
     
 
@@ -89,6 +91,7 @@ int main(){
             lastTime = currentTime;
 
             simu.checkObstacleRoad(road1);
+            simu.checkObstacleRoad(road2);
 
             // Pause pour ralentir la boucle (si besoin)
             std::this_thread::sleep_for(std::chrono::milliseconds(10));

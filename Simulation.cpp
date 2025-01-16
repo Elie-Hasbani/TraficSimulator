@@ -42,6 +42,8 @@
 #include <cmath>
 #endif
 
+#include <random>
+
 using namespace std;    
 
 
@@ -66,7 +68,6 @@ int Simulation::checkObstacleRoad(Road * road){
     
     for(list <Vehicule*>::iterator it = vehicules.begin(); it != vehicules.end(); ++it){
         //(re)setting the minimum distance to an obstacle for each vehicule
-
         (*it) ->changeMinDist(beginValue);
     }
 
@@ -92,7 +93,6 @@ int Simulation::checkObstacleRoad(Road * road){
                 }
 
             }
-
             /*for (list<Vehicule*>::iterator it2 = vehicules.begin(); it2 != vehicules.end(); ++it2){
                 if((*it) ->operator!=(*(*it2))){
                     double dist = (*it) -> getyPos() - (*it2) ->getyPos();
@@ -105,9 +105,6 @@ int Simulation::checkObstacleRoad(Road * road){
                 }
                 
             }*/
-
-            
-            
 
 
         }
@@ -143,6 +140,14 @@ int Simulation::checkObstacleRoad(Road * road){
                 //cout<<"entered"<<endl;
                 if((*it)->getSpeed() == 0){ //check if the vehicule stoped--> reached the end of the road
                     cout<<*(*it)<<" is at the end of the road"<<endl;
+                    int new_road = vehiculeChangeRoad((*it), road);
+                    roads[new_road] -> addVehicule(*it);
+
+                
+                    //road -> removeVehicule(it);
+
+
+                    
                 
                 } 
             }
@@ -155,23 +160,17 @@ int Simulation::checkObstacleRoad(Road * road){
 
     else{
         for(list <Vehicule*>::iterator it = vehicules.begin(); it != vehicules.end(); ++it){    
-            //for each vehicule we see if there's a vehicule near it(behid it). because they are ordered(see road.cpp), we can break for the first vehicule that is 
-            //too far and so, in each loop, the vehicule that directly before the last one is seen to see if there's any vehicule beofre it and update the minimial 
-            //distance to an obstacale(attribute of the vehicule). So if a vehicule that was seen for the car in the last loop is reseen by the current vehicule
-            //the minimal distance is updated for the seen vehicule, because it will necerely be nearer.(orderd list)                             
-            for (list<Vehicule*>::iterator it2 = vehicules.begin(); it2 != vehicules.end(); ++it2){
-                if((*it) ->operator!=(*(*it2))){
+            if(it != vehicules.end()){
+                list<Vehicule*>::iterator it2 = next(it); //vehicule rignt before it
+
+                if(it2 != vehicules.end()){
                     double dist = (*it) -> getxPos() - (*it2) ->getxPos();
-
-                    
-
-                    if(dist > 100){break;} //ordered list of vehicules
                     if ( dist >= 0 && dist <= 100.0){
                         (*it2) -> changeMinDist(dist); //min dist to an obstacle
 
                     } 
                 }
-                
+
             }
 
         }
@@ -187,9 +186,10 @@ int Simulation::checkObstacleRoad(Road * road){
                 //cout<<"entered2"<<endl;
                 if ( dist >=0 && dist  <= 100.0){
                     
-                    if(dist < (*it) -> getMinDist()){
+                    if(dist < (*it) -> getMinDist()){ 
                         (*it) -> changeMinDist(dist);
                     }
+                    break;
 
                 }            
                 
@@ -197,6 +197,24 @@ int Simulation::checkObstacleRoad(Road * road){
             }
 
         }
+        
+        /*list<Vehicule*>::iterator it = vehicules.begin(); //check if vehicule aproaching end of road
+        double dist = road -> getxEnd() - (*it) -> getxPos();
+        if ( dist >=0 && dist  <= 100.0){
+            if(dist <= (*it) -> getMinDist()){  //if there's a signalisation at the end of the raod, it will still choose the end of road (<=)
+                (*it) -> changeMinDist(dist);
+                //cout<<"entered"<<endl;
+                if((*it)->getSpeed() == 0){ //check if the vehicule stoped--> reached the end of the road
+                    cout<<*(*it)<<" is at the end of the road"<<endl;
+                    int new_road = vehiculeChangeRoad((*it), road);
+                    road -> removeVehicule(it);
+                    roads[new_road] -> addVehicule(*it);
+
+                    
+                
+                } 
+            }
+        }*/
 
     }
 
@@ -218,9 +236,22 @@ int Simulation::checkObstacleRoad(Road * road){
 }
 
 
-void Simulation::vehiculeChangeRoad(Vehicule *vehicule, Road*road){
+int Simulation::vehiculeChangeRoad(Vehicule *vehicule, Road*road){
     Intersection * intersection = road -> getIntersectionEnd();
+    vector<int> roads = intersection->roadNumbers;
     
+
+    int min = 0;
+    int max = intersection->roadNumbers.size() - 1;
+
+    random_device rd;  
+    mt19937 gen(rd()); 
+    uniform_int_distribution<> distrib(min, max); 
+
+    // Générer un nombre aléatoire
+    int new_road_index = distrib(gen);
+
+    return intersection->roadNumbers[new_road_index];
 
 
 }

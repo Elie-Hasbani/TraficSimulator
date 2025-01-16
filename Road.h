@@ -64,6 +64,7 @@ public:
 //-------------------------------------------- Constructeurs - destructeur
     
     void addVehicule(Vehicule* vehicule);
+    void removeVehicule(list<Vehicule*>::iterator &it);
     void addSignalisation(Signalisation * signalisation);
     inline void addIntersectionEnd(Intersection* intersection){intersectionEnd = intersection;}
     
@@ -74,6 +75,7 @@ public:
     inline Intersection* getIntersectionEnd(){return intersectionEnd;}
     inline int getOriantation(){return oriantation;}
     inline int getDirection(){return direction;}
+    inline int getNum(){return num;}
 
     inline int getxStart(){return xStart;}
     inline int getyStart(){return yStart;}
