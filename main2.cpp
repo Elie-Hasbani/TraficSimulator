@@ -30,8 +30,8 @@
 
 
 int main(){
-    Road* road1 = new Road(0, 0, 0,      0, 0, 500, 700);
-    Road* road2 = new Road(1, 1, 0,      0, 0, 500, 700);
+    Road* road1 = new Road(0, 0, 0,      0, 0, 0, 700);
+    Road* road2 = new Road(1, 1, 0,      0, 0, 1000, 0);
     
     Intersection * intersection1 = new Intersection;
     intersection1 -> roadNumbers.push_back(1);

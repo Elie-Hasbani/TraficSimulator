@@ -37,7 +37,7 @@ Vehicule::~Vehicule(){
     #endif
 }
 
-void Vehicule::Forward(int obstacle, int oriantation){
+void Vehicule::Forward(int obstacle){
 
     if(speed < max_speed && !obstacle){/*to re accelerate */}
 
@@ -83,18 +83,18 @@ void Vehicule::Forward(int obstacle, int oriantation){
         
 
 
-        if (!direction){
-            if (oriantation == 0){
+        if (!oriantation){
+            if (direction == 0){
                 yPos += speed;
             }
             else{
-                xPos += speed;
+                yPos -= speed;
             }
         }
 
         else{
-              if (oriantation == 0){
-                yPos -= speed;
+            if (direction == 0){
+                xPos += speed;
             }
             else{
                 xPos -= speed;

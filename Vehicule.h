@@ -31,7 +31,7 @@ public:
 
 //----------------------------------------------------- Méthodes publiques
    
-    void Forward(int Obstacle, int oriantation);
+    void Forward(int Obstacle);
     inline void changeOriantation(int ori){oriantation = ori;}
     inline void changeDirection(int direc){direction = direc;}
 

@@ -55,13 +55,11 @@ void Simulation::addRoad(Road * road){
 }
 
 
-
-
 int Simulation::checkObstacleRoad(Road * road){
   
     
-    list <Vehicule*> vehicules = road -> getVehicules();
-    vector<Signalisation*> signs = road->getSignalisation();
+    list <Vehicule*> vehicules = road ->vehicules_road;
+    vector<Signalisation*> signs = road-> signalisation_road;
     
     if(vehicules.begin() != vehicules.end()){
 
@@ -73,124 +71,70 @@ int Simulation::checkObstacleRoad(Road * road){
         }
 
         int oriantation = road-> oriantation;
-        if(oriantation == 0){
-
-            for(list <Vehicule*>::iterator it = vehicules.begin(); it != vehicules.end(); ++it){    
-                //for each vehicule we see if there's a vehicule near it(behid it). because they are ordered(see road.cpp), we can break for the first vehicule that is 
-                //too far and so, in each loop, the vehicule that directly before the last one is seen to see if there's any vehicule beofre it and update the minimial 
-                //distance to an obstacale(attribute of the vehicule). So if a vehicule that was seen for the car in the last loop is reseen by the current vehicule
-                //the minimal distance is updated for the seen vehicule, because it will necerely be nearer.(orderd list)       
-
-
-                if(it != vehicules.end()){
-                    list<Vehicule*>::iterator it2 = next(it); //vehicule rignt before it
-
-                    if(it2 != vehicules.end()){
-                        double dist = (*it) -> yPos - (*it2) ->yPos;
-                        if ( dist >= 0 && dist <= 100.0){
-                            (*it2) -> changeMinDist(dist); //min dist to an obstacle
-
-                        } 
-                    }
-                }
-            }
-
-            for(vector <Signalisation*>::iterator it3 = signs.begin(); it3 != signs.end(); ++it3){
-                
-                for(list <Vehicule*>::iterator it = vehicules.begin(); it != vehicules.end(); ++it){
-                    double dist = (*it3) -> yPos - (*it) ->yPos;
-
-                    if(dist > 100){break;} //ordered list of vehicules
-                    if ( dist >=0 && dist  <= 100.0){
-                        
-                        if(dist < (*it) -> minDistToObstacle){ 
-                            (*it) -> changeMinDist(dist);
-                        }
-                        break;
-
-                    }                                
-                }
-            }
-            
-            list<Vehicule*>::iterator it = (road -> vehicules_road).begin(); //check if vehicule aproaching end of road
-            double dist = road -> yEnd - (*it) -> yPos;
-            if ( dist >=0 && dist  <= 100.0){
-                if(dist <= (*it) -> minDistToObstacle){  //if there's a signalisation at the end of the raod, it will still choose the end of road (<=)
-                    (*it) -> changeMinDist(dist);
-                    if((*it)-> speed == 0){ //check if the vehicule stoped--> reached the end of the road
-                        cout<<*(*it)<<" is at the end of the road"<<endl;
-                        int new_road = vehiculeChangeRoad((*it), road);
-                        roads[new_road] -> addVehicule(*it);
-                        road -> removeVehicule(it);
-                    } 
-                }
-            }            
-        }
+        int direction = road -> direction;
+        for(list <Vehicule*>::iterator it = vehicules.begin(); it != vehicules.end(); ++it){    
+            //for each vehicule we see if there's a vehicule near it(behid it). because they are ordered(see road.cpp), we can break for the first vehicule that is 
+            //too far and so, in each loop, the vehicule that directly before the last one is seen to see if there's any vehicule beofre it and update the minimial 
+            //distance to an obstacale(attribute of the vehicule). So if a vehicule that was seen for the car in the last loop is reseen by the current vehicule
+            //the minimal distance is updated for the seen vehicule, because it will necerely be nearer.(orderd list)       
 
 
-        //deuxieme oriantation
-        else{
-            for(list <Vehicule*>::iterator it = vehicules.begin(); it != vehicules.end(); ++it){    
-                if(it != vehicules.end()){
-                    list<Vehicule*>::iterator it2 = next(it); //vehicule rignt before it
-                    if(it2 != vehicules.end()){
-                        double dist = (*it) -> xPos - (*it2) ->xPos;
-                        if ( dist >= 0 && dist <= 100.0){
-                            (*it2) -> changeMinDist(dist); //min dist to an obstacle
+            if(it != vehicules.end()){
+                list<Vehicule*>::iterator it2 = next(it); //vehicule rignt before it
 
-                        } 
-                    }
-                }
-            }
+                if(it2 != vehicules.end()){
+                    double dist = (!oriantation)*((*it) -> yPos - (*it2) ->yPos) + oriantation*((*it) -> xPos - (*it2) ->xPos);
+                    if ( dist >= 0 && dist <= 100.0){
+                        (*it2) -> changeMinDist(dist); //min dist to an obstacle
 
-            for(vector <Signalisation*>::iterator it3 = signs.begin(); it3 != signs.end(); ++it3){
-                for(list <Vehicule*>::iterator it = vehicules.begin(); it != vehicules.end(); ++it){
-                    double dist = (*it3) -> xPos - (*it) ->xPos;                   
-                    if(dist > 100){break;} //ordered list of vehicules
-                    if ( dist >=0 && dist  <= 100.0){
-                        
-                        if(dist < (*it) -> minDistToObstacle){ 
-                            (*it) -> changeMinDist(dist);
-                        }
-                        break;
-
-                    }            
-                    
-
-                }
-
-            }
-            
-            list<Vehicule*>::iterator it = vehicules.begin(); //check if vehicule aproaching end of road
-            double dist = road -> xEnd - (*it) -> xPos;
-            if ( dist >=0 && dist  <= 100.0){
-                if(dist <= (*it) -> minDistToObstacle){  //if there's a signalisation at the end of the raod, it will still choose the end of road (<=)
-                    (*it) -> changeMinDist(dist);
-                    if((*it)-> speed == 0){ //check if the vehicule stoped--> reached the end of the road
-                        cout<<*(*it)<<" is at the end of the road"<<endl;
-                        /*int new_road = vehiculeChangeRoad((*it), road);
-                        road -> removeVehicule(it);
-                        roads[new_road] -> addVehicule(*it);*/
-
-                        
-                    
                     } 
                 }
             }
-
         }
 
+        for(vector <Signalisation*>::iterator it3 = signs.begin(); it3 != signs.end(); ++it3){
+            
+            for(list <Vehicule*>::iterator it = vehicules.begin(); it != vehicules.end(); ++it){
+                double dist = (!oriantation)*((*it3) -> yPos - (*it) ->yPos) + oriantation*((*it3) -> xPos - (*it) ->xPos);
+
+                if(dist > 100){break;} //ordered list of vehicules
+                if ( dist >=0 && dist  <= 100.0){
+                    
+                    if(dist < (*it) -> minDistToObstacle){ 
+                        (*it) -> changeMinDist(dist);
+                    }
+                    break;
+
+                }                                
+            }
+        }
+        
+        list<Vehicule*>::iterator it = (road -> vehicules_road).begin(); //check if vehicule aproaching end of road
+        double dist = (!oriantation)*(road -> yEnd - (*it) -> yPos) + oriantation*(road -> xEnd - (*it) -> xPos);
+        
+        if ( dist >=0 && dist  <= 100.0){
+            if(dist <= (*it) -> minDistToObstacle){  //if there's a signalisation at the end of the raod, it will still choose the end of road (<=)
+                (*it) -> changeMinDist(dist);
+                if((*it)-> speed == 0){ //check if the vehicule stoped--> reached the end of the road
+                    cout<<*(*it)<<" is at the end of the road"<<endl;
+                    int new_road = vehiculeChangeRoad((*it), road);
+                    roads[new_road] -> addVehicule(*it);
+                    road -> removeVehicule(it);
+                } 
+            }
+        }            
+        
 
 
         for(list <Vehicule*>::iterator it = vehicules.begin(); it != vehicules.end(); ++it){
         //update each vehicule
 
             if((*it) -> minDistToObstacle == beginValue){
-                (*it) -> Forward(0, oriantation);
+                (*it) -> Forward(0);
             }
 
             else{
-                (*it) -> Forward(1, oriantation);
+                (*it) -> Forward(1);
                 
             }  
         }
