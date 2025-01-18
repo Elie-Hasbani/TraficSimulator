@@ -46,7 +46,7 @@
 
 using namespace std;
 
-
+class Simulation;
 class Road
 {
 //----------------------------------------------------------------- PUBLIC
@@ -88,6 +88,7 @@ public:
 
     Road (int nu, int ori, int direc, int xstart, int ystart, int xend, int yend);
     virtual ~Road ( );
+    friend class Simulation;
     //Road (const Road & road);
 
 //------------------------------------------------------------------ PRIVE

@@ -12,7 +12,7 @@ int main() {
 
     // Obtenir un itérateur pointant sur l'élément à supprimer
     auto it = lst.begin();
-    std::advance(it, 2); // Avancer de deux positions pour pointer sur 30
+    //std::advance(it, 2); // Avancer de deux positions pour pointer sur 30
 
     // Appeler la fonction pour supprimer l'élément pointé
     supprimerElement(lst, it);

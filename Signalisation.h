@@ -9,7 +9,8 @@
 
 using namespace std; 
 
-
+class Simulation;
+class Road;
 class Signalisation
 {
     public:
@@ -19,6 +20,9 @@ class Signalisation
 
     inline int getxPos(){return xPos;}
     inline int getyPos(){return yPos;}
+
+    friend class Simulation;
+    friend class Road;
 
 
 

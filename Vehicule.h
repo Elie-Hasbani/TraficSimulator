@@ -18,7 +18,8 @@
 
 using namespace std; 
 
-
+class Simulation;
+class Road;
 class Vehicule
 {
     
@@ -30,7 +31,7 @@ public:
 
 //----------------------------------------------------- Méthodes publiques
    
-    void Forward(int Obstacle, int oriantation, double dist);
+    void Forward(int Obstacle, int oriantation);
     inline void changeOriantation(int ori){oriantation = ori;}
     inline void changeDirection(int direc){direction = direc;}
 
@@ -51,6 +52,9 @@ public:
 //-------------------------------------------- Constructeurs - destructeur
     Vehicule(float xPos = 50, float yPos = 10, double speed = 10);
     virtual ~Vehicule ( );
+
+    friend class Simulation;
+    friend class Road;
    
 
 

@@ -37,12 +37,15 @@ Vehicule::~Vehicule(){
     #endif
 }
 
-void Vehicule::Forward(int obstacle, int oriantation, double dist){
+void Vehicule::Forward(int obstacle, int oriantation){
 
     if(speed < max_speed && !obstacle){/*to re accelerate */}
 
 
     if (!obstacle){
+        if(speed == 0){
+            speed = max_speed;
+        }
 
   
         speed = speed*(1+ 0.5*(1-speed/max_speed));
@@ -72,8 +75,8 @@ void Vehicule::Forward(int obstacle, int oriantation, double dist){
 
     else{
 
-        speed = max_speed* sqrt(((dist-10.0)/90.0));
-        if (dist < 10){
+        speed = max_speed* sqrt(((minDistToObstacle-10.0)/90.0));
+        if (minDistToObstacle < 10){
             speed = 0;
         }
 

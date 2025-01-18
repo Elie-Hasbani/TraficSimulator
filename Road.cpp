@@ -27,7 +27,7 @@ void Road::addVehicule(Vehicule* vehicule){
         }
 
         list <Vehicule*>::iterator it = vehicules_road.begin();
-        while (it != vehicules_road.end() && (*it) -> getyPos()  >= vehicule -> getyPos()){
+        while (it != vehicules_road.end() && (*it) -> yPos  >= vehicule -> yPos){
             ++it;
         }
 
@@ -43,7 +43,7 @@ void Road::addVehicule(Vehicule* vehicule){
         }
 
         list <Vehicule*>::iterator it = vehicules_road.begin();
-        while (it != vehicules_road.end() && (*it) -> getxPos()  >= vehicule -> getxPos()){
+        while (it != vehicules_road.end() && (*it) -> xPos  >= vehicule -> xPos){
             ++it;
         }
 
@@ -59,8 +59,6 @@ void Road::addVehicule(Vehicule* vehicule){
 
 void Road::removeVehicule(list<Vehicule*>::iterator & it){
     vehicules_road.erase(it);
-
-
 
 }
 
