@@ -3,7 +3,7 @@ CXXFLAGS =
 MAP_FLAG = -DMAP
 
 OBJS = main2.o Vehicule.o Road.o Signalisation.o Simulation.o 
-TARGET = main
+TARGET = Trafic
 
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(MAP_FLAG) -o $(TARGET) $(OBJS)
