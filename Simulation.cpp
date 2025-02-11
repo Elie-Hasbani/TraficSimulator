@@ -117,7 +117,7 @@ int Simulation::checkObstacleRoad(Road * road){
                 (*it) -> changeMinDist(dist);
                 if((*it)-> speed == 0){ //check if the vehicule stoped--> reached the end of the road
                     cout<<*(*it)<<" is at the end of the road"<<endl;
-                    int new_road = vehiculeChangeRoad((*it), road);
+                    int new_road = getNextRoadRoad((*it), road);
                     roads[new_road] -> addVehicule(*it);
                     road -> removeVehicule(it);
                 } 
@@ -148,7 +148,7 @@ int Simulation::checkObstacleRoad(Road * road){
 }
 
 
-int Simulation::vehiculeChangeRoad(Vehicule *vehicule, Road*road){
+int Simulation::getNextRoadRoad(Vehicule *vehicule, Road*road){
     Intersection * intersection = road -> intersectionEnd;
     vector<int> roads = intersection->roadNumbers;
     
